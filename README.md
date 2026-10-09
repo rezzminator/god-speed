@@ -105,7 +105,7 @@ It never asks about committing, pushing, merging or releasing (those follow your
 
 The skill's `description` tells the agent to load it whenever your prompt says the phrase. The agent reads the skill's rules and follows them for that request. A prompt that only *talks about* the phrase, such as *"what does 'god speed' mean?"*, is answered normally.
 
-Checked on Claude Code 2.1.295 with Sonnet and Opus. The prompt above loaded the skill and asked nothing; the question about the phrase did not load it; a request that changed what an imported constant means asked that one question before the first edit, then ran to the end without another.
+Checked on Claude Code 2.1.295 with Sonnet and Opus. The prompt above loaded the skill and asked nothing; the question about the phrase did not load it; a request that changed what an imported constant means asked that one question before the first edit, then ran to the end without another. On Codex CLI 0.161.0 the skill loads, but Codex's Default-mode instructions prefer assumptions over questions, and it decided that same fork itself instead of asking.
 
 ## Decisions, not permissions
 

@@ -31,7 +31,7 @@ Never ask about commit, push, merge, release or a version bump (§ 3 Keep permis
 
 ## 2. Ask once
 
-Ask every such fork in one round before the first edit: the harness's question tool where it has one, otherwise one numbered message ending the turn. Four questions at most — past four, ask the four costliest to reverse and decide the rest. Each question carries its own context in plain words, 2–4 options, your recommendation first. No fork qualifies: ask nothing and start.
+Ask every such fork in one round before the first edit: the harness's question tool where it has one, otherwise one plain-text message ending the turn that asks each fork and names your recommended answer. Four questions at most — past four, ask the four costliest to reverse and decide the rest. Each question carries its own context in plain words and your recommendation first, with 2–4 options where the tool takes them. No fork qualifies: ask nothing and start.
 
 A load-bearing fork that only surfaces mid-run is decided, not asked: take the option cheapest to reverse and keep the other reachable (the old path behind a flag, the dropped side on a branch).
 
