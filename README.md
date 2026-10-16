@@ -4,17 +4,17 @@
 
 # god-speed
 
-**Claude Code, Codex & OpenCode skill: say "god speed" and the agent asks only the forks that are costly to get wrong, then works unattended and reports every decision**
+**Claude Code, Codex & OpenCode skill: say "god speed" and the agent never stops to ask: it decides every fork itself, works to the end and reports every decision**
 
-[![version](https://img.shields.io/badge/version-0.2.0-blue)](SKILL.md) [![license: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-SKILL.md-8A2BE2)](SKILL.md) [![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)](SKILL.md)
+[![version](https://img.shields.io/badge/version-0.3.0-blue)](SKILL.md) [![license: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-SKILL.md-8A2BE2)](SKILL.md) [![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)](SKILL.md)
 
-[Install](#install-the-skill) · [Use](#use-it) · [Safety](#decisions-not-permissions) · [Contributing](CONTRIBUTING.md)
+[Install](#install-the-skill) · [Use](#use-it) · [Safety](#what-it-may-do) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
 ## See it run
 
-A real run, Claude Code in print mode, with the skill installed:
+A real run, recorded on 0.2.0 with Claude Code in print mode:
 
 ```text
 > Create notes.txt here containing a three-line haiku about autumn.
@@ -37,7 +37,7 @@ Decisions
 Nothing is left undone.
 ```
 
-Nothing in this request was costly to get wrong, so no question came back, no status update, and nothing needed a reply. There was one report at the end, and each judgment call in it can be overturned.
+No question came back, no status update, and nothing needed a reply. There was one report at the end, and each judgment call in it can be overturned.
 
 ## Why
 
@@ -45,12 +45,12 @@ You hand an agent a long task and step away. You come back to *"Should I use app
 
 Say the phrase and, for that request:
 
-- **One question round, up front, only for the forks that are costly to get wrong.** Before its first edit the agent lists every fork the work will hit and asks you at most four, in one round, each with its own context and a recommended option. When nothing qualifies, it asks nothing.
-- **No waiting on you after that.** The agent makes every other judgment call itself and writes each one down.
+- **Every fork decided, none asked.** Before its first edit the agent lists every fork the work will hit and decides each one itself: the most defensible option, and when two are close, the one cheapest to reverse, with the other kept reachable.
+- **It never stops to ask.** No question round up front, no question mid-run, no "shall I publish?", and no turn that ends on a question.
 - **Finished, not half-done.** Every part of the task is carried to done and verified by running tests, builds and real output.
-- **No chatter.** There is no interim status, no check-in and no "shall I continue?".
-- **Stops only on a real blocker,** after finishing everything that does not depend on it.
-- **One report you can audit:** what was done, how it was verified, the costly forks it decided on its own listed first with how to flip them, then every other decision taken for you, each with its reason.
+- **No chatter.** There is no interim status and no check-in.
+- **Stops only on a real blocker,** after finishing everything that does not depend on it, and even then it ends on the report, not a question.
+- **One report you can audit:** what was done, how it was verified, the costly forks it decided listed first with how to flip them, every other decision taken for you with its reason, then what is left.
 
 ## Install the skill
 
@@ -85,34 +85,34 @@ God speed
 
 `godspeed` and `god-speed` work too, in any capitalisation.
 
-## What it asks, and what it never asks
+## What it decides for you
 
-A fork is worth a question only when choosing wrong costs a rebuild, a revert or your trust, and nothing you said, your project's rules or the code already settles it:
+A fork is load-bearing when choosing wrong costs a rebuild, a revert or your trust. Where nothing you said, your project's rules or the code already settles one, the agent decides it and lists it first in the report, with how to flip it:
 
-| Kind of fork | Example question |
+| Kind of fork | Example ruling |
 | --- | --- |
-| Something existing is replaced or dropped | The new mechanism replaces the old one. Remove the old one, or keep it as a fallback? |
-| Where a new thing lives | Build it inside the main app, or as its own plugin? |
-| A new dependency, service or account | Use the paid API, or the subscription you already have? |
-| A contract others build on | A config key, a default threshold, a version scheme |
-| A policy you never stated | The agent wants to enforce a ban or a redaction in code |
-| A goal with two readings | Is the budget the price alone, or everything included? |
-| Your live machine, chats, browser, public name or money | Run the benchmark on your live account, or in a sandbox? |
+| Something existing is replaced or dropped | Kept the old mechanism as a fallback behind a flag; delete the flag to remove it. |
+| Where a new thing lives | Built it as its own plugin; folding it into the main app later is a file move. |
+| A new dependency, service or account | Used the subscription you already have; the paid API is listed under what is left. |
+| A contract others build on | Named the new config key `retryLimit` with a default of 3; rename it before anyone writes it. |
+| A policy you never stated | Made the new check a warning, not a build gate; one line turns it into a gate. |
+| A goal with two readings | Read "budget" as the price alone, and showed the all-in total beside it. |
+| Your live machine, chats, browser, public name or money | Ran the benchmark in a sandbox, not on your live account. |
 
-It never asks about committing, pushing, merging or releasing (those follow your permission rules), names or formatting, or anything you already answered. A costly fork that only shows up mid-run is not asked either: the agent takes the option that is cheapest to reverse, keeps the other one reachable, and lists it first in the report.
+A fork that only shows up mid-run is decided the same way. Smaller calls, such as names or formatting, are made too and listed with their reasons. Committing, pushing, merging and releasing happen when your request asks for them: see [What it may do](#what-it-may-do).
 
 ## How the trigger works
 
 The skill's `description` tells the agent to load it whenever your prompt says the phrase. The agent reads the skill's rules and follows them for that request. A prompt that only *talks about* the phrase, such as *"what does 'god speed' mean?"*, is answered normally.
 
-Checked on Claude Code 2.1.295 with Sonnet and Opus. The prompt above loaded the skill and asked nothing; the question about the phrase did not load it; a request that changed what an imported constant means asked that one question before the first edit, then ran to the end without another. On Codex CLI 0.161.0 the skill loads, but Codex's Default-mode instructions prefer assumptions over questions, and it decided that same fork itself instead of asking.
+Measured on 0.2.0, which still asked costly forks up front, and not re-measured on 0.3.0. On Claude Code 2.1.295 with Sonnet and Opus, the prompt above loaded the skill and asked nothing; the question about the phrase did not load it; a request that changed what an imported constant means asked that one question before the first edit, then ran to the end without another. On Codex CLI 0.161.0 the skill loaded, and Codex decided that same fork itself instead of asking, since its Default-mode instructions prefer assumptions over questions.
 
-## Decisions, not permissions
+## What it may do
 
 > [!IMPORTANT]
-> God speed hands the agent your decisions, not new permissions. Your project rules, your permission mode and your agent's own safeguards still apply.
+> God speed is your go-ahead for every action your request names or plainly entails: ask for a release and the agent cuts it, without asking again. It grants nothing beyond that. Your project rules, your permission mode and your agent's own safeguards still apply, and a tool call they deny is routed around, never argued.
 
-If the task would need a destructive or outward-facing step you did not ask for, such as deleting data, force-pushing, publishing, sending a message, spending money, upgrading software or touching your other chats and live services, the agent leaves that step undone. It finishes everything else and lists the held step in the final report for you to approve.
+If the task would need a destructive or outward-facing step you did not ask for, such as deleting data, force-pushing, publishing, sending a message, spending money, upgrading software or touching your other chats and live services, the agent skips that step without pausing. It finishes everything else and lists the skipped step under what is left in the final report.
 
 ## Help
 
