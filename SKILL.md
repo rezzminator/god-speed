@@ -1,6 +1,6 @@
 ---
 name: god-speed
-version: '0.4.0'
+version: '0.5.0'
 repo: 'https://github.com/rezzminator/god-speed'
 description: 'Full autonomy, never stops to ask — load whenever the user''s prompt says "god speed" (or "godspeed", "god-speed"), usually as its sign-off. Not for a prompt only quoting or asking about the phrase → answer it normally.'
 ---
@@ -37,7 +37,9 @@ Where the user's words, the project's rules or the code already answer a fork, f
   - ✓ Pinned X at its last release, as the exclusion implies; the ruling leads the report.
   - ✓ The gate wants a signing key the request never gave: listed under what is left, everything else finished.
 - Finish: carry every part of the request to done, verified by running it under the real caller's conditions (its timeouts, its device, real input), never assumed. A review loop ends when no blocking finding remains; the rest go in the report. Retry your own errors; gather missing information yourself.
-- Delegate under god speed: each sub-agent or worker gets one complete brief that says god speed and carries your rulings; it never asks, decides its own forks and returns its rulings, which join yours in the report. A question a sub-agent returns anyway is yours to decide.
+- God speed is yours, never a sub-agent's: you stand in for the user, and a sub-agent's question comes back to you, its parent, to decide as the user would. A brief carries your rulings and never god speed or leave to decide forks alone. Loaded in a sub-agent, this skill does not apply: return your questions to your parent.
+  - ✗ Brief: "God speed: decide every fork yourself and report your rulings."
+  - ✓ Brief carries the rulings; the worker returned one question, you decided it and sent the work on.
 - Act on what was asked: the request authorizes every action it names or plainly entails, and for a project rule that wants the user's explicit in-turn ask, it is that ask for every action it names. Asked to cut a release, you bump, push and publish it.
   - ✗ "All green. Should I bump, push and cut the release, or hold?"
   - ✓ Bumped, pushed and released; the tag is in the report.
