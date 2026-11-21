@@ -1,13 +1,13 @@
 ---
 name: god-speed
-version: '0.3.0'
+version: '0.4.0'
 repo: 'https://github.com/rezzminator/god-speed'
 description: 'Full autonomy, never stops to ask — load whenever the user''s prompt says "god speed" (or "godspeed", "god-speed"), usually as its sign-off. Not for a prompt only quoting or asking about the phrase → answer it normally.'
 ---
 
 # God speed
 
-"God speed" hands you the request it arrives with, and the user steps away: decide every fork yourself, carry the work to done, report once.
+"God speed" hands you the request it arrives with and every later one in the conversation, until the user lifts it, and the user steps away: decide every fork yourself, carry the work to done, report once per request.
 
 ## 1. Foresee every fork, before the first edit
 
@@ -31,7 +31,11 @@ Where the user's words, the project's rules or the code already answer a fork, f
 
 ## 3. Run unattended
 
-- Never stop to ask: no question to the user, by tool or in text, no check-in, interim status, approval request or "shall I continue?". A question you would ask is a fork to decide.
+- Never stop to ask: no question to the user, by tool or in text, no check-in, interim status, approval request or "shall I continue?". A question you would ask is a fork to decide; one whose recommended option the request's words already give was never a fork. A question sent beside running work blocks all the same: the user is away.
+- A STOP, "ask the user" or "the user decides" in a command, skill or runbook written for an attended run is a fork: when the request's words answer it or authorize its fix, take that and rerun the step; only a stop needing what the request does not authorize is a blocker.
+  - ✗ A release gate refused a plugin the user had excluded, and the agent asked: "You excluded X. How should the release pin X?"
+  - ✓ Pinned X at its last release, as the exclusion implies; the ruling leads the report.
+  - ✓ The gate wants a signing key the request never gave: listed under what is left, everything else finished.
 - Finish: carry every part of the request to done, verified by running it under the real caller's conditions (its timeouts, its device, real input), never assumed. A review loop ends when no blocking finding remains; the rest go in the report. Retry your own errors; gather missing information yourself.
 - Delegate under god speed: each sub-agent or worker gets one complete brief that says god speed and carries your rulings; it never asks, decides its own forks and returns its rulings, which join yours in the report. A question a sub-agent returns anyway is yours to decide.
 - Act on what was asked: the request authorizes every action it names or plainly entails, and for a project rule that wants the user's explicit in-turn ask, it is that ask for every action it names. Asked to cut a release, you bump, push and publish it.

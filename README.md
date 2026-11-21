@@ -6,7 +6,7 @@
 
 **Claude Code, Codex & OpenCode skill: say "god speed" and the agent never stops to ask: it decides every fork itself, works to the end and reports every decision**
 
-[![version](https://img.shields.io/badge/version-0.3.0-blue)](SKILL.md) [![license: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-SKILL.md-8A2BE2)](SKILL.md) [![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)](SKILL.md)
+[![version](https://img.shields.io/badge/version-0.4.0-blue)](SKILL.md) [![license: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-SKILL.md-8A2BE2)](SKILL.md) [![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)](SKILL.md)
 
 [Install](#install-the-skill) · [Use](#use-it) · [Safety](#what-it-may-do) · [Contributing](CONTRIBUTING.md)
 
@@ -103,9 +103,9 @@ A fork that only shows up mid-run is decided the same way. Smaller calls, such a
 
 ## How the trigger works
 
-The skill's `description` tells the agent to load it whenever your prompt says the phrase. The agent reads the skill's rules and follows them for that request. A prompt that only *talks about* the phrase, such as *"what does 'god speed' mean?"*, is answered normally.
+The skill's `description` tells the agent to load it whenever your prompt says the phrase. The agent reads the skill's rules and follows them for that request and every later one in the conversation, until you lift it. A prompt that only *talks about* the phrase, such as *"what does 'god speed' mean?"*, is answered normally.
 
-Measured on 0.2.0, which still asked costly forks up front, and not re-measured on 0.3.0. On Claude Code 2.1.295 with Sonnet and Opus, the prompt above loaded the skill and asked nothing; the question about the phrase did not load it; a request that changed what an imported constant means asked that one question before the first edit, then ran to the end without another. On Codex CLI 0.161.0 the skill loaded, and Codex decided that same fork itself instead of asking, since its Default-mode instructions prefer assumptions over questions.
+Measured on 0.2.0, which still asked costly forks up front, and not re-measured on 0.3.0 or 0.4.0. On Claude Code 2.1.295 with Sonnet and Opus, the prompt above loaded the skill and asked nothing; the question about the phrase did not load it; a request that changed what an imported constant means asked that one question before the first edit, then ran to the end without another. On Codex CLI 0.161.0 the skill loaded, and Codex decided that same fork itself instead of asking, since its Default-mode instructions prefer assumptions over questions. 0.4.0's rule on attended-run stops was replayed on Claude Code 2.1.330 with Opus: a release gate that stopped on a plugin the user had excluded was decided without a question in 3 of 3 runs, and 0.3.0 also decided it in 3 of 3; the question the rule targets came deep in a long live run, which the replay does not reproduce.
 
 ## What it may do
 
